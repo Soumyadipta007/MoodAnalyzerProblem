@@ -15,18 +15,32 @@ namespace MoodAnalyzerProblem
             this.message = message;
         }
         public string analyzeMood(string message)
-        {            
-            if (message.Contains("Sad"))
-                return "SAD";
-            else
-                return "HAPPY";                                                  
+        {
+            try
+            {
+                if (message.Contains("Sad"))
+                    return "SAD";
+                else
+                    return "HAPPY";
+            }
+            catch
+            {
+                return "HAPPY";
+            }
         }
         public string analyzeMood()
         {
-            if (this.message.Contains("Sad"))
-                return "SAD";
-            else
+            try
+            {
+                if (this.message.Contains("Sad"))
+                    return "SAD";
+                else
+                    return "HAPPY";
+            }
+            catch
+            {
                 return "HAPPY";
+            }
         }
     }
 }
