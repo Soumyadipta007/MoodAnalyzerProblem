@@ -6,7 +6,7 @@ namespace UnitTestProject1
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void GivenSadMoodReturnSad()
         {
             //Arrange
             MoodAnalyze moodAnalyze = new MoodAnalyze();
@@ -16,7 +16,7 @@ namespace UnitTestProject1
             Assert.AreEqual("SAD", result);
         }
         [TestMethod]
-        public void TestMethod2()
+        public void GivenHappyMoodReturnHappy()
         {
             //Arrange
             MoodAnalyze moodAnalyze = new MoodAnalyze();
@@ -27,7 +27,7 @@ namespace UnitTestProject1
         }
         [TestMethod]
         [DataRow("I am in Sad Mood")]
-        public void TestMethod3(string message)
+        public void GivenSadMoodInConstructorReturnSad(string message)
         {
             //Arrange
             MoodAnalyze moodAnalyze = new MoodAnalyze(message);
@@ -38,7 +38,7 @@ namespace UnitTestProject1
         }
         [TestMethod]
         [DataRow("I am in Happy Mood")]
-        public void TestMethod4(string message)
+        public void GivenHappyMoodInConstructorReturnHappy(string message)
         {
             //Arrange
             MoodAnalyze moodAnalyze = new MoodAnalyze(message);
@@ -49,14 +49,37 @@ namespace UnitTestProject1
         }
         [TestMethod]
         [DataRow(null)]
-        public void TestMethod5(string message)
+        public void GivenNullMoodThrowMoodAnalyzerExceptionNullMessage(string message)
         {
-            //Arrange
-            MoodAnalyze moodAnalyze = new MoodAnalyze(message);
-            //Act
-            var result = moodAnalyze.analyzeMood();
-            //Assert
-            Assert.AreEqual("HAPPY", result);
+            try
+            {
+                //Arrange
+                MoodAnalyze moodAnalyze = new MoodAnalyze(message);
+                //Act
+                var result = moodAnalyze.analyzeMood();
+            }
+            catch(MoodAnalyzerException e)
+            {
+                //Assert
+                Assert.AreEqual("Mood should not be null", e.Message);
+            }
+        }
+        [TestMethod]
+        [DataRow("")]
+        public void GivenEmptyMoodThrowMoodAnalyzerExceptionEmptyMessage(string message)
+        {
+            try
+            {
+                //Arrange
+                MoodAnalyze moodAnalyze = new MoodAnalyze(message);
+                //Act
+                var result = moodAnalyze.analyzeMood();
+            }
+            catch (MoodAnalyzerException e)
+            {
+                //Assert
+                Assert.AreEqual("Mood should not be empty", e.Message);
+            }
         }
     }
 }
