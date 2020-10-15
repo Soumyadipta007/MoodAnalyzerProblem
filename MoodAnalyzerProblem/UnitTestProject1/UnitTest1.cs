@@ -81,5 +81,51 @@ namespace UnitTestProject1
                 Assert.AreEqual("Mood should not be empty", e.Message);
             }
         }
+        [TestMethod]
+        public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject()
+        {
+            //Arrange
+            string message = null;
+            object expected = new MoodAnalyze(message);
+            //Act
+            object obj = MoodAnalyzerFactory.CreateMoodAnalyser("MoodAnalyzerProblem.MoodAnalyze", "MoodAnalyze");
+            //Assert
+            expected.Equals(obj);
+            Assert.AreEqual(expected.GetType(), obj.GetType());
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeImproperClassName_ShouldThrowMoodAnalysisException()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                object expected = new MoodAnalyze(message);
+                //Act
+                object obj = MoodAnalyzerFactory.CreateMoodAnalyser("MoodAnalyzerProblem.MoodAnalyz", "MoodAnalyz");                  
+            }
+            catch(MoodAnalyzerException e)
+            {
+                //Assert
+                Assert.AreEqual("Class not found", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeImproperConstructorName_ShouldThrowMoodAnalysisException()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                object expected = new MoodAnalyze(message);
+                //Act
+                object obj = MoodAnalyzerFactory.CreateMoodAnalyser("MoodAnalyzerProblem.MoodAnalyze", "MoodAnalyz");
+            }
+            catch (MoodAnalyzerException e)
+            {
+                //Assert
+                Assert.AreEqual("Constructor is not found", e.Message);
+            }
+        }
     }
 }
